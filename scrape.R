@@ -8,17 +8,17 @@ p_load(rvest, tidyverse, magrittr)
 ### I. Inputs 
 ################################
 
-# Set "base url", the first page of the search.
+# Set "base url", the first page of search results.
 base_url = 'https://www.indeed.com/jobs?q=data+scientist&l=new+york%2C+ny'
 
 # Set number of pages of search results we want the scraper to parse.
 num_pages = 5
 
 # Set "current url" initially to base url. This will be the page that the loop
-# works on in each iteration, and then updates to be the next search page.
+# works on in each iteration.
 current_url = base_url
 
-# We want to scrape job titles and brief job summaries from each search
+# We want to scrape job titles, companies, & job summaries from each search
 # result. Create empty data frames to house the scraped data.
 titles = list()
 
@@ -26,6 +26,8 @@ companies = list()
 
 summaries = list()
 
+# We'll grow these lists. Make index for the list element that gets updated 
+# in each iteration.
 k = 0
 
 # Loop through each page.
@@ -37,7 +39,7 @@ for (i in 1:num_pages) {
   # 2. Get job ads from current page, find the nodes containing job ads, and
   # store the job ad nodes in a list.
   ads = current_page %>%
-    html_nodes('[class="  row  result"]') # Job ads are contained in nodes of this class.
+    html_nodes('[class="  row  result"]') # Job ads are contained in these nodes.
   
   # 3. Loop through each job ad node in our list.
   for (j in 1:length(ads)) {
@@ -52,14 +54,14 @@ for (i in 1:num_pages) {
       html_nodes('[class=company]') %>%
       html_text()
     
-    # 3b. Get the job summary.
+    # 3c. Get the job summary.
     summaries[[j + k]] = ads[[j]] %>%
       html_nodes('[class=summary]') %>%
       html_text() 
     
   }
   
-  # 4. 
+  # 4. Update list index.
   k = k + j
   
   # Recap: We've scraped the data we want from every job ad on the current page.
@@ -78,23 +80,28 @@ for (i in 1:num_pages) {
   
 }
 
+# Collapse lists into matrices.
 titles = do.call(rbind, titles)
 
 companies = do.call(rbind, companies)
 
 summaries = do.call(rbind, summaries)
 
-# Combine titles and summaries into one data frame. Each row in titles is
-# from the same exact ad as its corresponding row in summaries. That was the
-# whole point of the big loop above.
+# Combine titles and summaries into one tibble. Each row in titles is
+# from the same exact ad as its corresponding row in summaries. (That was the
+# whole point of using list indexes above.)
 data_sci = cbind(titles, companies, summaries) %>%
   as.tibble() %>%
   set_colnames(c('title', 'company', 'summary'))
 
-# Filter out cases where job title contains "analyst", implies seniority, or is dumb.
+# Filter out cases where job title contains "analyst" or implies seniority.
 data_sci %<>%
-  filter(!grepl(pattern = 'data analyst|Sr.|Jr.|senior|junior|lead', 
+  filter(!grepl(pattern = 'data analyst|sr.|jr.|senior|junior|lead', 
                 x = title, ignore.case = TRUE)) 
+
+
+
+
 
 
 
