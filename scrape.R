@@ -1,11 +1,21 @@
 library('pacman')
 p_load(rvest, tidyverse, magrittr)
 
+
+################################
+### I. Inputs 
+################################
+
 # Set "base url," the first page of the search.
 base_url = 'https://www.indeed.com/jobs?q=data+scientist&l=new+york%2C+ny'
 
 # Set number of pages of search results we want the scraper to parse.
 num_pages = 5
+
+
+################################
+### II. Scraper 
+################################
 
 # Set "current url" initially to base url. This will be the page that the loop
 # works on in each iteration, and then updates to be the next search page.
@@ -20,8 +30,7 @@ descriptions = tibble()
 # Loop through each page.
 for (i in 1:num_pages) {
   
-  # 1. Go to Indeed.com, grab current page, and load it into R as an xml
-  # document.
+  # 1. Go to Indeed.com, grab current page, and load it into R as an xml document.
   current_url_page = read_html(current_url)
 
   # 2. Get job ads from current page, find the nodes containing job ads, and
