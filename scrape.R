@@ -94,16 +94,18 @@ data_sci = cbind(titles, companies, summaries) %>%
   as.tibble() %>%
   set_colnames(c('title', 'company', 'summary'))
 
-# Filter out cases where job title contains "analyst" or implies seniority.
+# Keep only ads w/ "Data Scientist" in title.
+# Remove cases where job title contains "analyst" or implies seniority.
 data_sci %<>%
-  filter(!grepl(pattern = 'data analyst|sr.|jr.|senior|junior|lead', 
+  filter(grepl(pattern = 'data scientist', x = title, ignore.case = TRUE),
+         !grepl(pattern = 'data analyst|sr.|jr.|senior|junior|lead|intern', 
                 x = title, ignore.case = TRUE)) 
 
 
 
 
 
-
+# Tutorials
 
 # https://dashee87.github.io/data%20science/data-scientists-vs-data-analysts-part-1/
 # https://stat4701.github.io/edav/2015/04/02/rvest_tutorial/
@@ -113,7 +115,7 @@ data_sci %<>%
 
 # may want to automate my browser w/ Selenium: http://www.seleniumhq.org/
 
-s = html_session('https://www.indeed.com/jobs?q=data+scientist&l=new+york%2C+ny')
-
-s %<>%
-  jump_to(url = )
+# s = html_session('https://www.indeed.com/jobs?q=data+scientist&l=new+york%2C+ny')
+# 
+# s %<>%
+#   jump_to(url = )
