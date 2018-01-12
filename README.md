@@ -6,12 +6,13 @@ This is a simple scraper for "Data Scientist" and "Data Analyst" job postings on
 
 ## Issues
 
-* Indeed does not list skills in their front page results. 
-* Most links lead to non-Indeed sites. 
-    * I could use Selenium, etc, to click through each link and extract info from the external job ads.
+* Indeed does not list skills in their results.
+* I can only extract short snippets of each job summary.
+* Most links lead to non-Indeed sites.
 
 ## To-do
 
-* Extract job summaries and replicate [this](https://medium.com/@msalmon00/web-scraping-job-postings-from-indeed-96bd588dcb4b) analysis.
-* Make list of skills.
-    * Either configure a headless browser or automate crawling with Rvest. Search for words from list within each ad.
+* Instead replicate [this](https://medium.com/@msalmon00/web-scraping-job-postings-from-indeed-96bd588dcb4b) analysis.
+* Automate crawling, either with Rvest or [RSelenium](https://cran.r-project.org/web/packages/RSelenium/vignettes/RSelenium-basics.html#basic-navigation). 
+    * Make list of skills.
+    * Search for words from list within each ad.
