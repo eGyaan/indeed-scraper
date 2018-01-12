@@ -1,0 +1,14 @@
+Tutorials
+
+https://dashee87.github.io/data%20science/data-scientists-vs-data-analysts-part-1/
+https://stat4701.github.io/edav/2015/04/02/rvest_tutorial/
+https://github.com/hadley/rvest
+https://medium.com/@msalmon00/web-scraping-job-postings-from-indeed-96bd588dcb4b
+https://jessesw.com/Data-Science-Skills/
+
+may want to automate my browser w/ Selenium: http://www.seleniumhq.org/
+
+s = html_session('https://www.indeed.com/jobs?q=data+scientist&l=new+york%2C+ny')
+
+s %<>%
+  jump_to(url = )
