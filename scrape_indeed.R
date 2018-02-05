@@ -1,8 +1,12 @@
-library(magrittr)
-library(rvest)
-library(tidyverse)
+# This function's arguments are as follows.
+# `base_url` is the first page of search results.
+# `num_pages` is the number of pages of results to be scraped.
 
 scrape_indeed = function(base_url, num_pages) {
+  
+  library(magrittr)
+  library(rvest)
+  library(tidyverse)
   
   # This will be the page that the loop works on in each iteration.
   # Set it initially to the base URL, since that's the 1st page we'll scrape.
